@@ -8,6 +8,8 @@
 django-admin startproject config .
 django-admin startapp utils
 
+(env) pip install -r requirements/local.txt
+
 (env) docker compose -f docker-compose.dev.yml up
 (env) docker compose -f docker-compose.dev.yml up --build
 (env) docker compose -f docker-compose.dev.yml stop

@@ -1,0 +1,150 @@
+{
+  "Create Router for App": {
+    "prefix": "|router",
+    "body": [
+      "\"\"\"Routers for ${1:AppName} App.\"\"\"",
+      "",
+      "from django.urls import include",
+      "from django.urls import path",
+      "from rest_framework.routers import DefaultRouter",
+      "",
+      "from .viewsets import ${3:ViewSetName}ViewSet",
+      "",
+      "router = DefaultRouter()",
+      "router.register(r\"${2:url}\", ${3:ViewSetName}ViewSet, basename=\"${2:url}\")",
+      "",
+      "urlpatterns = [",
+      "    path(\"api/v1/\", include(router.urls)),",
+      "]"
+    ]
+  },
+  "Create Model": {
+    "prefix": "|model",
+    "body": [
+      "from django.db import models",
+      "",
+      "",
+      "class ${1:ModelName}(models.Model):",
+      "    '''Model definition for ${1:ModelName} model.'''",
+      "",
+      "    ${2:# TODO: Insert fields}",
+      "",
+      "    class Meta:",
+      "        ordering = ['${4:field_name}']",
+      "        verbose_name = '${1:ModelName}'",
+      "        verbose_name_plural = '${1:ModelNames}s'",
+      "",
+      "    def __str__(self):",
+      "        return str(self.${3:field_name})"
+    ],
+    "description": "Create a Django model"
+  },
+  "Create Char field (Model)": {
+    "prefix": "|char",
+    "body": [
+      "${1:field_name} = models.CharField('${1:field_name}', max_length=${2:255})"
+    ]
+  },
+  "Create Text field (Model)": {
+    "prefix": "|text",
+    "body": [
+      "${1:field_name} = models.TextField('${1:field_name}')"
+    ]
+  },
+  "Create Integer field (Model)": {
+    "prefix": "|integer",
+    "body": [
+      "${1:field_name} = models.IntegerField('${1:field_name}')"
+    ]
+  },
+  "Create Float field (Model)": {
+    "prefix": "|float",
+    "body": [
+      "${1:field_name} = models.FloatField('${1:field_name}')"
+    ]
+  },
+  "Create Decimal field (Model)": {
+    "prefix": "|decimal",
+    "body": [
+      "${1:field_name} = models.DecimalField('${1:field_name}', max_digits=${2:10}, decimal_places=${3:2})"
+    ]
+  },
+  "Create Boolean field (Model)": {
+    "prefix": "|boolean",
+    "body": [
+      "${1:field_name} = models.BooleanField('${1:field_name}', default=${2:False})"
+    ]
+  },
+  "Create Date field (Model)": {
+    "prefix": "|date",
+    "body": [
+      "${1:field_name} = models.DateField('${1:field_name}')"
+    ]
+  },
+  "Create DateTime field (Model)": {
+    "prefix": "|datetime",
+    "body": [
+      "${1:field_name} = models.DateTimeField('${1:field_name}', auto_now_add=${2:True})"
+    ]
+  },
+  "Create Email field (Model)": {
+    "prefix": "|email",
+    "body": [
+      "${1:field_name} = models.EmailField('${1:field_name}')"
+    ]
+  },
+  "Create URL field (Model)": {
+    "prefix": "|url",
+    "body": [
+      "${1:field_name} = models.URLField('${1:field_name}')"
+    ]
+  },
+  "Create Image field (Model)": {
+    "prefix": "|image",
+    "body": [
+      "${1:field_name} = models.ImageField('${1:field_name}', upload_to='${2:images}/')"
+    ]
+  },
+  "Create File field (Model)": {
+    "prefix": "|file",
+    "body": [
+      "${1:field_name} = models.FileField('${1:field_name}', upload_to='${2:files}/')"
+    ]
+  },
+  "Create ForeignKey field (Model)": {
+    "prefix": "|fk",
+    "body": [
+      "${1:field_name} = models.ForeignKey(${2:RelatedModel}, on_delete=models.CASCADE)"
+    ]
+  },
+  "Create ManyToMany field (Model)": {
+    "prefix": "|m2m",
+    "body": [
+      "${1:field_name} = models.ManyToManyField(${2:RelatedModel})"
+    ]
+  },
+  "Create OneToOne field (Model)": {
+    "prefix": "|o2o",
+    "body": [
+      "${1:field_name} = models.OneToOneField(${2:RelatedModel}, on_delete=models.CASCADE)"
+    ]
+  },
+  "Create Slug field (Model)": {
+    "prefix": "|slug",
+    "body": [
+      "${1:field_name} = models.SlugField('${1:field_name}', unique=${2:True})"
+    ]
+  },
+  "Create JSON field (Model)": {
+    "prefix": "|json",
+    "body": [
+      "${1:field_name} = models.JSONField('${1:field_name}')"
+    ]
+  },
+  "Create Array field (Model)": {
+    "prefix": "|array",
+    "body": [
+      "${1:field_name} = ArrayField(models.CharField(max_length=${2:50}), blank=True)"
+    ]
+  }
+}

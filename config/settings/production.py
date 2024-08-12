@@ -9,7 +9,6 @@ from .base import *
 env = environ.Env()
 environ.Env.read_env(".env")
 
-
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 DATABASES = {
