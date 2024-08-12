@@ -6,30 +6,25 @@ import environ
 from .base import *
 
 
-DEBUG = False
-
-
 env = environ.Env()
-environ.Env.read_env("config/.env")
+environ.Env.read_env(".env")
 
 
-ALLOWED_HOSTS = ["example.com", "www.example.com"]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("POSTGRES_DB"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": "db",
+        "PORT": "5432",
     }
 }
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-# DEFAULT_FROM_EMAIL = "FandomHub - API <alt.tyronejose@gmail.com>"
-# EMAIL_HOST = env("EMAIL_HOST")
-# EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-# EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
-# EMAIL_PORT = env("EMAIL_PORT")
-# EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
@@ -43,11 +38,6 @@ SECURE_HSTS_SECONDS = 31536000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_BROWSER_XSS_FILTER = True
 
-CORS_ALLOWED_ORIGINS = [
-    "https://example.com",
-    "https://subdomain.example.com",
-]
-
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
 
 CORS_ALLOW_CREDENTIALS = True

@@ -8,10 +8,22 @@ import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-
 env = environ.Env()
-environ.Env.read_env(".env.dev")
+environ.Env.read_env(".env")
 
+
+DEBUG = env("DEBUG")
+
+# # Example: "local", "testing", "production"
+# ENVIRONMENT = env("ENVIRONMENT", default="local")
+
+# SETTINGS_MAP = {
+#     "local": "config.settings.local",
+#     "testing": "config.settings.testing",
+#     "production": "config.settings.production",
+# }
+
+# SETTINGS_MODULE = SETTINGS_MAP.get(ENVIRONMENT, "config.settings.local")
 
 BASE_APPS = [
     "django.contrib.admin",
@@ -23,7 +35,7 @@ BASE_APPS = [
 ]
 
 PROJECT_APPS = [
-    # ...
+    "apps.utils",
 ]
 
 THIRD_APPS = [
@@ -147,10 +159,13 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Example decription.",
     "VERSION": "v1",
     "LICENSE": {
-        "name": "Apache Licence 2.0",
-        "url": "https://github.com/...",
+        "name": env("LICENCE_NAME"),
+        "url": env("LICENCE_URL"),
     },
-    "CONTACT": {"name": "Example", "url": "https://github.com/example"},
+    "CONTACT": {
+        "name": env("CONTACT_NAME"),
+        "url": env("CONTACT_URL"),
+    },
     # "SCHEMA_PATH_PREFIX": r"^/api/v\d+",
     "SCHEMA_PATH_PREFIX_TRIM": True,
     "SERVE_INCLUDE_SCHEMA": False,

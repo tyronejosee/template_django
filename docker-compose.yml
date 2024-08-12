@@ -1,19 +1,17 @@
 services:
   db:
     image: postgres
-    container_name: example_db # Update
+    container_name: example_db # TODO: Update value
     restart: always
-    environment:
-      POSTGRES_DB: example_db # Update
-      POSTGRES_USER: example_user # Update
-      POSTGRES_PASSWORD: example_password # Update
+    env_file:
+      - ./.env
     ports:
-      - 5432:5432
+      - 5480:5432 # TODO: If you have more containers, update the external port
     volumes:
       - .data:/var/lib/postgresql
 
   web:
-    container_name: example_web # Update
+    container_name: example_web # TODO: Update value
     build:
       context: .
       dockerfile: Dockerfile
@@ -21,9 +19,9 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8000:8000"
+      - "8050:8000" # TODO: If you have more containers, update the external port
     env_file:
-      - ./.env.dev
+      - ./.env
     depends_on:
       - db
     restart: always

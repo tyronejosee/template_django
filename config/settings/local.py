@@ -5,11 +5,9 @@ import sys
 from .base import *
 
 
-DEBUG = True
-
 SECRET_KEY = env("SECRET_KEY")
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -29,9 +27,9 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": "dropdash_db",
-            "USER": "dropdash_user",
-            "PASSWORD": "dropdash_password",
+            "NAME": env("POSTGRES_DB"),
+            "USER": env("POSTGRES_USER"),
+            "PASSWORD": env("POSTGRES_PASSWORD"),
             "HOST": "db",
             "PORT": "5432",
         }

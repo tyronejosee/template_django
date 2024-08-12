@@ -1,7 +1,6 @@
 # Project files
 db.sqlite3
-.env.dev
-.env.prod
+.env
 desktop.ini
 
 # Byte-compiled / optimized / DLL files
