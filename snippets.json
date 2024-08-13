@@ -1,8 +1,96 @@
 {
+  "Create Admin docstrings": {
+    "prefix": "|d_admin",
+    "body": [
+      "'''Admin for ${1:AppName} App.'''"
+    ]
+  },
+  "Create Choices docstrings": {
+    "prefix": "|d_choices",
+    "body": [
+      "'''Choices for ${1:AppName} App.'''"
+    ]
+  },
+  "Create Filters docstrings": {
+    "prefix": "|d_filters",
+    "body": [
+      "'''Filters for ${1:AppName} App.'''"
+    ]
+  },
+  "Create Managers docstrings": {
+    "prefix": "|d_managers",
+    "body": [
+      "'''Managers for ${1:AppName} App.'''"
+    ]
+  },
+  "Create Models docstrings": {
+    "prefix": "|d_models",
+    "body": [
+      "'''Models for ${1:AppName} App.'''"
+    ]
+  },
+  "Create Routers docstrings": {
+    "prefix": "|d_routers",
+    "body": [
+      "'''Routers for ${1:AppName} App.'''"
+    ]
+  },
+  "Create Serializers docstrings": {
+    "prefix": "|d_serializers",
+    "body": [
+      "'''Serializers for ${1:AppName} App.'''"
+    ]
+  },
+  "Create Services docstrings": {
+    "prefix": "|d_services",
+    "body": [
+      "'''Services for ${1:AppName} App.'''"
+    ]
+  },
+  "Create Signals docstrings": {
+    "prefix": "|d_signals",
+    "body": [
+      "'''Signals for ${1:AppName} App.'''"
+    ]
+  },
+  "Create Views docstrings": {
+    "prefix": "|d_views",
+    "body": [
+      "'''Views for ${1:AppName} App.'''"
+    ]
+  },
+  "Create ViewSets docstrings": {
+    "prefix": "|d_viewsets",
+    "body": [
+      "'''ViewSets for ${1:AppName} App.'''"
+    ]
+  },
+  "Create Admin Register": {
+    "prefix": "|admin",
+    "body": [
+      "from django.contrib import admin",
+      "",
+      "from .models import ${1:ModelName}",
+      "",
+      "",
+      "@admin.register(${1:ModelName})",
+      "class ${1:ModelName}Admin(admin.ModelAdmin):",
+      "    '''Admin for ${1:ModelName} model.'''",
+      "",
+      "    list_per_page = ${2:25}",
+      "    search_fields = ['${3:field_name}']",
+      "    list_display = ['${4:field_name}']",
+      "    list_filter = ['${5:field_name']",
+      "    list_editable = ['${6:field_name']",
+      "    readonly_fields = ['${7:field_name']",
+      "    ordering = ['${8:pk']"
+    ],
+    "description": "Create a Django admin"
+  },
   "Create Router for App": {
     "prefix": "|router",
     "body": [
-      "\"\"\"Routers for ${1:AppName} App.\"\"\"",
+      "'''Routers for ${1:AppName} App.'''",
       "",
       "from django.urls import include",
       "from django.urls import path",
@@ -11,11 +99,33 @@
       "from .viewsets import ${3:ViewSetName}ViewSet",
       "",
       "router = DefaultRouter()",
-      "router.register(r\"${2:url}\", ${3:ViewSetName}ViewSet, basename=\"${2:url}\")",
+      "router.register(r'${2:url}', ${3:ViewSetName}ViewSet, basename='${2:url}')",
       "",
       "urlpatterns = [",
-      "    path(\"api/v1/\", include(router.urls)),",
+      "    path('api/v1/', include(router.urls)),",
       "]"
+    ]
+  },
+  "Create Text Choices": {
+    "prefix": "|choices_text",
+    "body": [
+      "from django.db import models",
+      "",
+      "",
+      "class ${1:Name}Choices(models.TextChoices):",
+      "",
+      "    ${2:CHOICE_NAME} = '${2:choice_name}', '${2:Choice Name}'"
+    ]
+  },
+  "Create Integer Choices": {
+    "prefix": "|choices_int",
+    "body": [
+      "from django.db import models",
+      "",
+      "",
+      "class ${1:Name}Choices(models.IntegerChoices):",
+      "",
+      "    ${3:CHOICE_NAME} = 1, '${3:Choice Name}'"
     ]
   },
   "Create Model": {
@@ -26,7 +136,6 @@
       "",
       "class ${1:ModelName}(models.Model):",
       "    '''Model definition for ${1:ModelName} model.'''",
-      "",
       "    ${2:# TODO: Insert fields}",
       "",
       "    class Meta:",
@@ -39,110 +148,346 @@
     ],
     "description": "Create a Django model"
   },
+  "Create ModelSerializer": {
+    "prefix": "|serializer",
+    "body": [
+      "from rest_framework import serializers",
+      "",
+      "from .models import ${1:ModelName}",
+      "",
+      "",
+      "class ${1:ModelName}Serializer(serializers.ModelSerializer):",
+      "    '''Serializer for ${1:ModelName} model.'''",
+      "",
+      "    class Meta:",
+      "        model = ${1:ModelName}",
+      "        fields = ['${2:field_name1}', '${3:field_name2}', '${4:field_name3}']",
+      "        read_only_fields = ['${5:field_name4}']",
+      "        extra_kwargs = {",
+      "            '${6:field_name5}': {'write_only': True},",
+      "            '${7:field_name6}': {'required': False},",
+      "        }",
+      "",
+      "    def validate_${8:field_name7}(self, value):",
+      "        '''Custom validation for ${8:field_name7}.'''",
+      "        if ${9:condition}:",
+      "            raise serializers.ValidationError('${10:Error message}')",
+      "        return value",
+      "",
+      "    def create(self, validated_data):",
+      "        '''Custom create method.'''",
+      "        return ${1:ModelName}.objects.create(**validated_data)",
+      "",
+      "    def update(self, instance, validated_data):",
+      "        '''Custom update method.'''",
+      "        for attr, value in validated_data.items():",
+      "            setattr(instance, attr, value)",
+      "        instance.save()",
+      "        return instance"
+    ],
+    "description": "Create a ModelSerializer"
+  },
+  "Create Normal Serializer": {
+    "prefix": "|basic_serializer",
+    "body": [
+      "from rest_framework import serializers",
+      "",
+      "from .models import ${1:ModelName}",
+      "",
+      "",
+      "class ${1:ModelName}Serializer(serializers.Serializer):",
+      "    '''Basic serializer for ${1:ModelName} model.'''",
+      "",
+      "    ${2:field_name1} = serializers.${3:CharField}(max_length=${4:100})",
+      "    ${5:field_name2} = serializers.${6:IntegerField}()",
+      "    ${7:field_name3} = serializers.${8:DateTimeField}(required=False)",
+      "",
+      "    def create(self, validated_data):",
+      "        '''Create and return a new ${1:ModelName} instance, given the validated data.'''",
+      "        return ${1:ModelName}.objects.create(**validated_data)",
+      "",
+      "    def update(self, instance, validated_data):",
+      "        '''Update and return an existing ${1:ModelName} instance, given the validated data.'''",
+      "        for attr, value in validated_data.items():",
+      "            setattr(instance, attr, value)",
+      "        instance.save()",
+      "        return instance"
+    ],
+    "description": "Create a Normal Serializer"
+  },
+  "Create Service": {
+    "prefix": "|service",
+    "body": [
+      "class ${1:ServiceName}:",
+      "    '''Service class for handling ${2:description}.'''",
+      "",
+      "    def __init__(self, ${3:dependency}):",
+      "        '''Initialize the service with its dependencies.'''",
+      "        self.${3:dependency} = ${3:dependency}",
+      "",
+      "    def ${4:method_name}(self, ${5:arg}):",
+      "        '''Method to ${6:description}.'''",
+      "        # Implement your service logic here",
+      "        ${7:pass}"
+    ],
+    "description": "Create a Django service class"
+  },
+  "Create ViewSet": {
+    "prefix": "|viewset",
+    "body": [
+      "from rest_framework.viewsets import ModelViewSet",
+      "from rest_framework.permissions import IsAuthenticated, AllowAny",
+      "",
+      "from .models import ${1:ModelName}",
+      "from .serializers import ${1:ModelName}Serializer",
+      "",
+      "",
+      "class ${1:ModelName}ViewSet(ModelViewSet):",
+      "    '''",
+      "    ViewSet for ${1:ModelName} model.",
+      "",
+      "    Endpoints:",
+      "    - GET /api/v1/${2:model_name}/",
+      "    - POST /api/v1/${2:model_name}/",
+      "    - GET /api/v1/${2:model_name}/{id}/",
+      "    - PUT /api/v1/${2:model_name}/{id}/",
+      "    - PATCH /api/v1/${2:model_name}/{id}/",
+      "    - DELETE /api/v1/${2:model_name}/{id}/",
+      "    '''",
+      "",
+      "    permission_classes = [IsAuthenticated]",
+      "    serializer_class = ${1:ModelName}WriteSerializer",
+      "    search_fields = ['field_name', 'field_name']",
+      "    # Filterset_class = ${1:ModelName}Filter",
+      "",
+      "    def get_queryset(self):",
+      "        return ${1:ModelName}objects.filter(field_name=key)",
+      "",
+      "    def get_serializer_class(self):",
+      "        if self.action == 'list':",
+      "            return ${1:ModelName}MinimalSerializer",
+      "        elif self.action == 'retrieve':",
+      "            return ${1:ModelName}ReadSerializer",
+      "        return super().get_serializer_class()",
+      "",
+      "    def get_permissions(self):",
+      "        if self.action in ['create']:",
+      "            return [AllowAny()]",
+      "        return super().get_permissions()",
+      "",
+      "    def perform_create(self, serializer):",
+      "        serializer.save(user_id=self.request.user)"
+    ],
+    "description": "Create a Django REST Framework ViewSet"
+  },
+  "Utils: SlugMixin": {
+    "prefix": "|u_slug_mixin",
+    "body": [
+      "from django.db import models",
+      "from django.utils.text import slugify",
+      "",
+      "",
+      "class SlugMixin(models.Model):",
+      "    '''Mixin providing slug functionality for models.'''",
+      "",
+      "    slug = models.SlugField(unique=True, blank=True)",
+      "",
+      "    def set_slug(self):",
+      "        if hasattr(self, \"name\") and self.name:",
+      "            slug_name = slugify(self.name)[:50]",
+      "            if self.slug != slug_name:",
+      "                self.slug = slug_name",
+      "        elif hasattr(self, \"title\") and self.title:",
+      "            slug_title = slugify(self.title)[:50]",
+      "            if self.slug != slug_title:",
+      "                self.slug = slug_title",
+      "        elif hasattr(self, \"word\") and self.word:",
+      "            slug_word = slugify(self.word)[:50]",
+      "            if self.slug != slug_word:",
+      "                self.slug = slug_word",
+      "",
+      "    class Meta:",
+      "        abstract = True"
+    ],
+    "description": "Mixin providing slug functionality for models."
+  },
+  "Utils: ListCacheMixin": {
+    "prefix": "|u_list_cache_mixin",
+    "body": [
+      "from django.utils.decorators import method_decorator",
+      "from django.views.decorators.cache import cache_page",
+      "from django.views.decorators.vary import vary_on_headers",
+      "from rest_framework.response import Response",
+      "",
+      "",
+      "class ListCacheMixin:",
+      "    '''Mixin provides caching for the list methods of viewsets.'''",
+      "",
+      "    @method_decorator(cache_page(60 * 60 * 2))",
+      "    @method_decorator(vary_on_headers('User-Agent'))",
+      "    def list(self, request, *args, **kwargs):",
+      "        queryset = self.filter_queryset(self.get_queryset())",
+      "",
+      "        model_name = queryset.model._meta.verbose_name_plural.lower()",
+      "        if not queryset.exists():",
+      "            return Response({'message': f'No {model_name} available'})",
+      "",
+      "        page = self.paginate_queryset(queryset)",
+      "        if page is not None:",
+      "            serializer = self.get_serializer(page, many=True)",
+      "            return self.get_paginated_response(serializer.data)",
+      "",
+      "        serializer = self.get_serializer(queryset, many=True)",
+      "        return Response(serializer.data)"
+    ],
+    "description": "Mixin provides caching for the list methods of viewsets."
+  },
+  "Utils: LogicalDeleteMixin": {
+    "prefix": "|u_logical_delete_mixin",
+    "body": [
+      "from rest_framework.response import Response",
+      "from rest_framework import status",
+      "from django.http import Http404",
+      "",
+      "",
+      "class LogicalDeleteMixin:",
+      "    '''Mixin for logical deletion of instances.'''",
+      "",
+      "    def destroy(self, request, *args, **kwargs):",
+      "        '''Deletes the instance logically by marking it as unavailable.'''",
+      "        try:",
+      "            instance = self.get_object()",
+      "            instance.is_available = False",
+      "            instance.save()",
+      "            return Response(status=status.HTTP_204_NO_CONTENT)",
+      "        except Http404:",
+      "            return Response(",
+      "                {'error': 'Resource not found.'}, status=status.HTTP_404_NOT_FOUND",
+      "            )",
+      "        except Exception as e:",
+      "            return Response(",
+      "                {'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR",
+      "            )"
+    ],
+    "description": "Mixin for logical deletion of instances."
+  },
+  "Utils: ReadOnlyFieldsMixin": {
+    "prefix": "|u_readonly_fields_mixin",
+    "body": [
+      "class ReadOnlyFieldsMixin:",
+      "    '''Mixin to make all serializer fields read-only.'''",
+      "",
+      "    def __init__(self, *args, **kwargs):",
+      "        super().__init__(*args, **kwargs)",
+      "        for field in self.fields:",
+      "            self.fields[field].read_only = True"
+    ],
+    "description": "Mixin to make all serializer fields read-only."
+  },
   "Create Char field (Model)": {
-    "prefix": "|char",
+    "prefix": "|m_char",
     "body": [
       "${1:field_name} = models.CharField('${1:field_name}', max_length=${2:255})"
     ]
   },
   "Create Text field (Model)": {
-    "prefix": "|text",
+    "prefix": "|m_text",
     "body": [
       "${1:field_name} = models.TextField('${1:field_name}')"
     ]
   },
   "Create Integer field (Model)": {
-    "prefix": "|integer",
+    "prefix": "|m_integer",
     "body": [
       "${1:field_name} = models.IntegerField('${1:field_name}')"
     ]
   },
   "Create Float field (Model)": {
-    "prefix": "|float",
+    "prefix": "|m_float",
     "body": [
       "${1:field_name} = models.FloatField('${1:field_name}')"
     ]
   },
   "Create Decimal field (Model)": {
-    "prefix": "|decimal",
+    "prefix": "|m_decimal",
     "body": [
       "${1:field_name} = models.DecimalField('${1:field_name}', max_digits=${2:10}, decimal_places=${3:2})"
     ]
   },
   "Create Boolean field (Model)": {
-    "prefix": "|boolean",
+    "prefix": "|m_boolean",
     "body": [
       "${1:field_name} = models.BooleanField('${1:field_name}', default=${2:False})"
     ]
   },
   "Create Date field (Model)": {
-    "prefix": "|date",
+    "prefix": "|m_date",
     "body": [
       "${1:field_name} = models.DateField('${1:field_name}')"
     ]
   },
   "Create DateTime field (Model)": {
-    "prefix": "|datetime",
+    "prefix": "|m_datetime",
     "body": [
       "${1:field_name} = models.DateTimeField('${1:field_name}', auto_now_add=${2:True})"
     ]
   },
   "Create Email field (Model)": {
-    "prefix": "|email",
+    "prefix": "|m_email",
     "body": [
       "${1:field_name} = models.EmailField('${1:field_name}')"
     ]
   },
   "Create URL field (Model)": {
-    "prefix": "|url",
+    "prefix": "|m_url",
     "body": [
       "${1:field_name} = models.URLField('${1:field_name}')"
     ]
   },
   "Create Image field (Model)": {
-    "prefix": "|image",
+    "prefix": "|m_image",
     "body": [
       "${1:field_name} = models.ImageField('${1:field_name}', upload_to='${2:images}/')"
     ]
   },
   "Create File field (Model)": {
-    "prefix": "|file",
+    "prefix": "|m_file",
     "body": [
       "${1:field_name} = models.FileField('${1:field_name}', upload_to='${2:files}/')"
     ]
   },
   "Create ForeignKey field (Model)": {
-    "prefix": "|fk",
+    "prefix": "|m_fk",
     "body": [
       "${1:field_name} = models.ForeignKey(${2:RelatedModel}, on_delete=models.CASCADE)"
     ]
   },
   "Create ManyToMany field (Model)": {
-    "prefix": "|m2m",
+    "prefix": "|m_m2m",
     "body": [
       "${1:field_name} = models.ManyToManyField(${2:RelatedModel})"
     ]
   },
   "Create OneToOne field (Model)": {
-    "prefix": "|o2o",
+    "prefix": "|m_o2o",
     "body": [
       "${1:field_name} = models.OneToOneField(${2:RelatedModel}, on_delete=models.CASCADE)"
     ]
   },
   "Create Slug field (Model)": {
-    "prefix": "|slug",
+    "prefix": "|m_slug",
     "body": [
       "${1:field_name} = models.SlugField('${1:field_name}', unique=${2:True})"
     ]
   },
   "Create JSON field (Model)": {
-    "prefix": "|json",
+    "prefix": "|m_json",
     "body": [
       "${1:field_name} = models.JSONField('${1:field_name}')"
     ]
   },
   "Create Array field (Model)": {
-    "prefix": "|array",
+    "prefix": "|m_array",
     "body": [
       "${1:field_name} = ArrayField(models.CharField(max_length=${2:50}), blank=True)"
     ]
