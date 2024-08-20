@@ -1,68 +1,8 @@
 {
-  "Create Admin docstrings": {
-    "prefix": "|d_admin",
+  "Create Main Docstrings": {
+    "prefix": "|docstring",
     "body": [
-      "'''Admin for ${1:AppName} App.'''"
-    ]
-  },
-  "Create Choices docstrings": {
-    "prefix": "|d_choices",
-    "body": [
-      "'''Choices for ${1:AppName} App.'''"
-    ]
-  },
-  "Create Filters docstrings": {
-    "prefix": "|d_filters",
-    "body": [
-      "'''Filters for ${1:AppName} App.'''"
-    ]
-  },
-  "Create Managers docstrings": {
-    "prefix": "|d_managers",
-    "body": [
-      "'''Managers for ${1:AppName} App.'''"
-    ]
-  },
-  "Create Models docstrings": {
-    "prefix": "|d_models",
-    "body": [
-      "'''Models for ${1:AppName} App.'''"
-    ]
-  },
-  "Create Routers docstrings": {
-    "prefix": "|d_routers",
-    "body": [
-      "'''Routers for ${1:AppName} App.'''"
-    ]
-  },
-  "Create Serializers docstrings": {
-    "prefix": "|d_serializers",
-    "body": [
-      "'''Serializers for ${1:AppName} App.'''"
-    ]
-  },
-  "Create Services docstrings": {
-    "prefix": "|d_services",
-    "body": [
-      "'''Services for ${1:AppName} App.'''"
-    ]
-  },
-  "Create Signals docstrings": {
-    "prefix": "|d_signals",
-    "body": [
-      "'''Signals for ${1:AppName} App.'''"
-    ]
-  },
-  "Create Views docstrings": {
-    "prefix": "|d_views",
-    "body": [
-      "'''Views for ${1:AppName} App.'''"
-    ]
-  },
-  "Create ViewSets docstrings": {
-    "prefix": "|d_viewsets",
-    "body": [
-      "'''ViewSets for ${1:AppName} App.'''"
+      "'''${1:TypeModule} for ${2:AppName} App.'''"
     ]
   },
   "Create Admin Register": {
@@ -161,7 +101,7 @@
       "    def __str__(self):",
       "        return str(self.field_name)"
     ],
-    "description": "Create a Django model"
+    "description": "Create Model"
   },
   "Create ModelSerializer": {
     "prefix": "|serializer",
@@ -200,10 +140,10 @@
       "        instance.save()",
       "        return instance"
     ],
-    "description": "Create a ModelSerializer"
+    "description": "Create ModelSerializer"
   },
   "Create Normal Serializer": {
-    "prefix": "|basic_serializer",
+    "prefix": "|serializer_basic",
     "body": [
       "from rest_framework import serializers",
       "",
@@ -228,7 +168,7 @@
       "        instance.save()",
       "        return instance"
     ],
-    "description": "Create a Normal Serializer"
+    "description": "Create Normal Serializer"
   },
   "Create Service": {
     "prefix": "|service",
@@ -245,29 +185,32 @@
       "        # Implement your service logic here",
       "        ${7:pass}"
     ],
-    "description": "Create a Django service class"
+    "description": "Create Service Class"
   },
   "Create ViewSet": {
     "prefix": "|viewset",
     "body": [
       "from rest_framework.viewsets import ModelViewSet",
       "from rest_framework.permissions import IsAuthenticated, AllowAny",
+      "# from drf_spectacular.utils import extend_schema_view",
       "",
       "from .models import ${1:ModelName}",
       "from .serializers import ${1:ModelName}Serializer",
+      "# from .schemas import ${2:model_name}_schemas",
       "",
       "",
+      "# @extend_schema_view(**${2:model_name}_schemas)",
       "class ${1:ModelName}ViewSet(ModelViewSet):",
       "    '''",
       "    ViewSet for ${1:ModelName} model.",
       "",
       "    Endpoints:",
-      "    - GET /api/v1/${2:model_name}/",
-      "    - POST /api/v1/${2:model_name}/",
-      "    - GET /api/v1/${2:model_name}/{id}/",
-      "    - PUT /api/v1/${2:model_name}/{id}/",
-      "    - PATCH /api/v1/${2:model_name}/{id}/",
-      "    - DELETE /api/v1/${2:model_name}/{id}/",
+      "    - GET /api/v1/${2:model_name}s/",
+      "    - POST /api/v1/${2:model_name}s/",
+      "    - GET /api/v1/${2:model_name}s/{id}/",
+      "    - PUT /api/v1/${2:model_name}s/{id}/",
+      "    - PATCH /api/v1/${2:model_name}s/{id}/",
+      "    - DELETE /api/v1/${2:model_name}s/{id}/",
       "    '''",
       "",
       "    permission_classes = [IsAuthenticated]",
@@ -293,9 +236,63 @@
       "    def perform_create(self, serializer):",
       "        serializer.save(user_id=self.request.user)"
     ],
-    "description": "Create a Django REST Framework ViewSet"
+    "description": "Create ViewSet"
   },
-  "Schemas DRF-Spectacular": {
+  "Create Base ViewSet": {
+    "prefix": "|base_viewset",
+    "body": [
+      "from rest_framework.viewsets import ModelViewSet",
+      "from rest_framework.permissions import IsAuthenticated, AllowAny",
+      "# from drf_spectacular.utils import extend_schema_view",
+      "",
+      "from apps.utils.mixins import ListCacheMixin, LogicalDeleteMixin",
+      "from .models import ${1:ModelName}",
+      "from .serializers import ${1:ModelName}Serializer",
+      "# from .schemas import ${2:model_name}_schemas",
+      "",
+      "",
+      "# @extend_schema_view(**${2:model_name}_schemas)",
+      "class ${1:ModelName}ViewSet(ListCacheMixin, LogicalDeleteMixin, ModelViewSet):",
+      "    '''",
+      "    ViewSet for ${1:ModelName} model.",
+      "",
+      "    Endpoints:",
+      "    - GET /api/v1/${2:model_name}s/",
+      "    - POST /api/v1/${2:model_name}s/",
+      "    - GET /api/v1/${2:model_name}s/{id}/",
+      "    - PUT /api/v1/${2:model_name}s/{id}/",
+      "    - PATCH /api/v1/${2:model_name}s/{id}/",
+      "    - DELETE /api/v1/${2:model_name}s/{id}/",
+      "    '''",
+      "",
+      "    permission_classes = [IsAuthenticated]",
+      "    serializer_class = ${1:ModelName}WriteSerializer",
+      "    search_fields = ['field_name']",
+      "    # Filterset_class = ${1:ModelName}Filter",
+      "",
+      "    def get_queryset(self):",
+      "        if self.action == 'list':",
+      "            return ${1:ModelName}.objects.filter(field_name='key')",
+      "        return ${1:ModelName}.objects.filter(field_name='key')",
+      "",
+      "    def get_serializer_class(self):",
+      "        if self.action == 'list':",
+      "            return ${1:ModelName}MinimalSerializer",
+      "        elif self.action == 'retrieve':",
+      "            return ${1:ModelName}ReadSerializer",
+      "        return super().get_serializer_class()",
+      "",
+      "    def get_permissions(self):",
+      "        if self.action in ['create']:",
+      "            return [AllowAny()]",
+      "        return super().get_permissions()",
+      "",
+      "    def perform_create(self, serializer):",
+      "        serializer.save(user_id=self.request.user)"
+    ],
+    "description": "Create Base ViewSet"
+  },
+  "Create Schema": {
     "prefix": "|schemas",
     "body": [
       "from drf_spectacular.utils import extend_schema, OpenApiResponse",
@@ -314,24 +311,36 @@
       "        responses={",
       "            200: OpenApiResponse(",
       "                response=${2:Example}MinimalSerializer(many=True),",
-      "                description='OK (List of ${1:example}s successfully retrieved)",
+      "                description='OK (List of ${1:example}s successfully retrieved)'",
       "            ),",
-      "            400: OpenApiResponse(description='Bad Request (Invalid request data)'),",
-      "            404: OpenApiResponse(description='Not Found ({2:Example}s not found)'),",
+      "            400: OpenApiResponse(",
+      "                description='Bad Request (Invalid request data)',",
+      "            ),",
+      "            404: OpenApiResponse(",
+      "                description='Not Found (${2:Example}s not found)',",
+      "            ),",
       "        },",
       "        auth=[],",
       "        tags=['${1:example}s'],",
       "    ),",
       "    'create': extend_schema(",
       "        summary='Create a ${2:Example}',",
-      "        description='Create a new ${1:example}, only for `IsExample` or `IsAdministrator` users.',",
+      "        description='Create a new ${1:example}, only for `${3:IsExample}` or `IsAdministrator` users.',",
       "        request=${2:Example}WriteSerializer,",
       "        responses={",
       "            201: OpenApiResponse(",
-      "                response=${2:Example}WriteSerializer, description='Created ({2:Example} successfully created)'),",
-      "            400: OpenApiResponse(description='Bad Request (Invalid request data)'),",
-      "            401: OpenApiResponse(description='Unauthorized (Authentication credentials were not provided)'),",
-      "            403: OpenApiResponse(description='Forbidden (You do not have permission to perform this action)'),",
+      "                response=${2:Example}WriteSerializer,",
+      "                description='Created (${2:Example} successfully created)',",
+      "            ),",
+      "            400: OpenApiResponse(",
+      "                description='Bad Request (Invalid request data)',",
+      "            ),",
+      "            401: OpenApiResponse(",
+      "                description='Unauthorized (Authentication credentials were not provided)',",
+      "            ),",
+      "            403: OpenApiResponse(",
+      "                description='Forbidden (You do not have permission to perform this action)',",
+      "            ),",
       "        },",
       "        tags=['${1:example}s'],",
       "    ),",
@@ -339,55 +348,94 @@
       "        summary='Get a ${2:Example}',",
       "        description='Get detailed information about a specific ${1:example}.',",
       "        responses={",
-      "            200: OpenApiResponse(${2:Example}ReadSerializer, description='OK (${2:Example} details successfully retrieved)'),",
-      "            400: OpenApiResponse(description='Bad Request (Invalid request data)'),",
-      "            404: OpenApiResponse(description='Not Found (${2:Example} not found)'),",
+      "            200: OpenApiResponse(",
+      "                response=${2:Example}ReadSerializer,",
+      "                description='OK (${2:Example} details successfully retrieved)',",
+      "            ),",
+      "            400: OpenApiResponse(",
+      "                description='Bad Request (Invalid request data)',",
+      "            ),",
+      "            404: OpenApiResponse(",
+      "                description='Not Found (${2:Example} not found)',",
+      "            ),",
       "        },",
       "        auth=[],",
       "        tags=['${1:example}s'],",
       "    ),",
       "    'update': extend_schema(",
       "        summary='Update a ${2:Example}',",
-      "        description='Update all fields of a specific ${1:example}, only for `IsExample` or `IsAdministrator` users.',",
+      "        description='Update all fields of a specific ${1:example}, only for `${3:IsExample}` or `IsAdministrator` users.',",
       "        request=${2:Example}WriteSerializer,",
       "        responses={",
-      "            200: OpenApiResponse(${2:Example}WriteSerializer, description='OK (${2:Example} successfully updated)'),",
-      "            400: OpenApiResponse(description='Bad Request (Invalid request data)'),",
-      "            401: OpenApiResponse(description='Unauthorized (Authentication credentials were not provided)'),",
-      "            403: OpenApiResponse(description='Forbidden (You do not have permission to perform this action)'),",
-      "            404: OpenApiResponse(description='Not Found (${2:Example} not found)'),",
+      "            200: OpenApiResponse(",
+      "                response=${2:Example}WriteSerializer,",
+      "                description='OK (${2:Example} successfully updated)',",
+      "            ),",
+      "            400: OpenApiResponse(",
+      "                description='Bad Request (Invalid request data)',",
+      "            ),",
+      "            401: OpenApiResponse(",
+      "                description='Unauthorized (Authentication credentials were not provided)',",
+      "            ),",
+      "            403: OpenApiResponse(",
+      "                description='Forbidden (You do not have permission to perform this action)',",
+      "            ),",
+      "            404: OpenApiResponse(",
+      "                description='Not Found (${2:Example} not found)',",
+      "            ),",
       "        },",
       "        tags=['${1:example}s'],",
       "    ),",
       "    'partial_update': extend_schema(",
       "        summary='Partial Update a ${2:Example}',",
-      "        description='Update some fields of a specific ${1:example}, only for `IsExample` or `IsAdministrator` users.',",
+      "        description='Update some fields of a specific ${1:example}, only for `${3:IsExample}` or `IsAdministrator` users.',",
       "        request=${2:Example}WriteSerializer,",
       "        responses={",
-      "            200: OpenApiResponse(${2:Example}WriteSerializer, description='OK ({2:Example} successfully partially updated)'),",
-      "            400: OpenApiResponse(description='Bad Request (Invalid request data)'),",
-      "            401: OpenApiResponse(description='Unauthorized (Authentication credentials were not provided)'),",
-      "            403: OpenApiResponse(description='Forbidden (You do not have permission to perform this action)'),",
-      "            404: OpenApiResponse(description='Not Found ({2:Example} not found)')'),",
+      "            200: OpenApiResponse(",
+      "                response=${2:Example}WriteSerializer,",
+      "                description='OK (${2:Example} successfully partially updated)',",
+      "            ),",
+      "            400: OpenApiResponse(",
+      "                description='Bad Request (Invalid request data)',",
+      "            ),",
+      "            401: OpenApiResponse(",
+      "                description='Unauthorized (Authentication credentials were not provided)',",
+      "            ),",
+      "            403: OpenApiResponse(",
+      "                description='Forbidden (You do not have permission to perform this action)',",
+      "            ),",
+      "            404: OpenApiResponse(",
+      "                description='Not Found (${2:Example} not found)',",
+      "            ),",
       "        },",
       "        tags=['${1:example}s'],",
       "    ),",
       "    'destroy': extend_schema(",
       "        summary='Remove a ${2:Example}',",
-      "        description='Remove a specific ${1:example}, only for `IsExample` or `IsAdministrator` users.',",
+      "        description='Remove a specific ${1:example}, only for `${3:IsExample}` or `IsAdministrator` users.',",
       "        responses={",
-      "            204: OpenApiResponse(description='No Content ({2:Example} successfully removed)'),",
-      "            400: OpenApiResponse(description='Bad Request (Invalid request data)'),",
-      "            401: OpenApiResponse(description='Unauthorized (Authentication credentials were not provided)'),",
-      "            403: OpenApiResponse(description='Forbidden (You do not have permission to perform this action)'),",
-      "            404: OpenApiResponse(description='Not Found ({2:Example} not found)'),",
+      "            204: OpenApiResponse(",
+      "                description='No Content (${2:Example} successfully removed)',",
+      "            ),",
+      "            400: OpenApiResponse(",
+      "                description='Bad Request (Invalid request data)',",
+      "            ),",
+      "            401: OpenApiResponse(",
+      "                description='Unauthorized (Authentication credentials were not provided)',",
+      "            ),",
+      "            403: OpenApiResponse(",
+      "                description='Forbidden (You do not have permission to perform this action)',",
+      "            ),",
+      "            404: OpenApiResponse(",
+      "                description='Not Found (${2:Example} not found)',",
+      "            ),",
       "        },",
       "        tags=['${1:example}s'],",
       "    ),",
-      "    # TODO: Add here action fields",
+      "    # ! TODO: Add extra action fields here",
       "}"
     ],
-    "description": "Snippet for DRF Spectacular schemas."
+    "description": "Create DRF Spectacular Schema"
   },
   "Utils: SlugMixin": {
     "prefix": "|u_slug_mixin",
