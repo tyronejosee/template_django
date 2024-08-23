@@ -27,7 +27,7 @@
     ],
     "description": "Create a Django admin"
   },
-  "Create Router for App": {
+  "Create Router": {
     "prefix": "|router",
     "body": [
       "'''Routers for ${1:AppName} App.'''",
@@ -44,6 +44,51 @@
       "urlpatterns = [",
       "    path('api/v1/', include(router.urls)),",
       "]"
+    ]
+  },
+  "Create Nested Router": {
+    "prefix": "|nested_router",
+    "body": [
+      "from django.urls import include",
+      "from django.urls import path",
+      "from rest_framework.routers import DefaultRouter",
+      "from rest_framework_nested.routers import NestedSimpleRouter",
+      "",
+      "from .viewsets import (",
+      "    ${1:BaseModel}ViewSet,",
+      "    ${2:FirstNested}ViewSet,",
+      "    ${3:SecondNested}ViewSet,",
+      ")",
+      "",
+      "router = DefaultRouter()",
+      "router.register(",
+      "    r'${1:BaseModel}s',  # Lower",
+      "    ${1:BaseModel}ViewSet,",
+      "    basename='${1:BaseModel}',  # Lower",
+      ")",
+      "",
+      "nested_router = NestedSimpleRouter(",
+      "    router,",
+      "    r'${1:BaseModel}s',  # Lower",
+      "    lookup='${1:BaseModel}',  # Lower",
+      ")",
+      "",
+      "nested_router.register(",
+      "    r'${2:FirstNested}s',  # Lower",
+      "    ${2:FirstNested}ViewSet,",
+      "    basename='${1:BaseModel}-${2:FirstNested}',  # Lower",
+      ")",
+      "nested_router.register(",
+      "    r'${3:SecondNested}s',  # Lower",
+      "    ${3:SecondNested}ViewSet,",
+      "    basename='${1:BaseModel}-${3:SecondNested}',  # Lower",
+      ")",
+      "",
+      "urlpatterns = [",
+      "    path('api/v1/', include(router.urls)),",
+      "    path('api/v1/', include(nested_router.urls)),",
+      "]",
+      ""
     ]
   },
   "Create Text Choices": {

@@ -12,18 +12,7 @@ env = environ.Env()
 environ.Env.read_env(".env")
 
 
-DEBUG = env("DEBUG")
-
-# # Example: "local", "testing", "production"
-# ENVIRONMENT = env("ENVIRONMENT", default="local")
-
-# SETTINGS_MAP = {
-#     "local": "config.settings.local",
-#     "testing": "config.settings.testing",
-#     "production": "config.settings.production",
-# }
-
-# SETTINGS_MODULE = SETTINGS_MAP.get(ENVIRONMENT, "config.settings.local")
+DEBUG = env("DEBUG", default=False)
 
 BASE_APPS = [
     "django.contrib.admin",

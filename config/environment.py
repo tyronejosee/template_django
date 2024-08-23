@@ -1,16 +1,11 @@
-"""Enviroments."""
+"""Enviroments configs."""
 
 import environ
 
-# ! TODO: Refactor
 env = environ.Env()
 environ.Env.read_env(".env")
 
-
-# Example: "local", "testing", "production"
-ENVIRONMENT = env("ENVIRONMENT")
-
-# SETTINGS_MODULE = "config.settings.local"
+ENVIRONMENT = env("ENVIRONMENT", default="local")
 
 if ENVIRONMENT == "local":
     SETTINGS_MODULE = "config.settings.local"

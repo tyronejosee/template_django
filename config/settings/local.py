@@ -9,11 +9,7 @@ SECRET_KEY = env("SECRET_KEY")
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-    "http://127.0.0.1:8000/",
-    "localhost",
-]
+INTERNAL_IPS = env.list("INTERNAL_IPS")
 
 
 if "test" in sys.argv:
