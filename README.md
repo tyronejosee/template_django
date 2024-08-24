@@ -36,38 +36,7 @@ Create a copy of the `.env.example` file and rename it to `.env`.
 cp .env.example .env
 ```
 
-Update the values of the environment variables (Important).
-
-```bash
-# Environment
-# If you're in production, remember to set DEBUG to False
-# and ENVIRONMENT to production
-DEBUG=True
-# Examples: local, testing, production
-ENVIRONMENT=local
-
-# Project
-# Secret key generator: https://djecrety.ir/
-SECRET_KEY=
-
-# Database
-POSTGRES_DB=
-POSTGRES_USER=
-POSTGRES_PASSWORD=
-
-# Swagger UI and Redoc
-LICENCE_NAME=
-LICENCE_URL=
-CONTACT_NAME=
-CONTACT_URL=
-
-# Ports and Hosts
-# These are common examples for your localhost,
-# change them if you're in production
-ALLOWED_HOSTS=localhost,127.0.0.1
-INTERNAL_IPS=localhost,127.0.0.1
-CORS_ALLOWED_ORIGINS=
-```
+**Update the values of the environment variables (Important).**
 
 > Note: Make sure to correctly configure your variables before building the container.
 

@@ -24,8 +24,7 @@
       "    list_editable = ['field_name']",
       "    readonly_fields = ['field_name']",
       "    ordering = ['pk']"
-    ],
-    "description": "Create a Django admin"
+    ]
   },
   "Create Router": {
     "prefix": "|router",
@@ -145,8 +144,7 @@
       "",
       "    def __str__(self):",
       "        return str(self.field_name)"
-    ],
-    "description": "Create Model"
+    ]
   },
   "Create ModelSerializer": {
     "prefix": "|serializer",
@@ -184,8 +182,7 @@
       "            setattr(instance, attr, value)",
       "        instance.save()",
       "        return instance"
-    ],
-    "description": "Create ModelSerializer"
+    ]
   },
   "Create Normal Serializer": {
     "prefix": "|serializer_basic",
@@ -212,8 +209,7 @@
       "            setattr(instance, attr, value)",
       "        instance.save()",
       "        return instance"
-    ],
-    "description": "Create Normal Serializer"
+    ]
   },
   "Create Service": {
     "prefix": "|service",
@@ -229,8 +225,7 @@
       "        '''Method to ${6:description}.'''",
       "        # Implement your service logic here",
       "        ${7:pass}"
-    ],
-    "description": "Create Service Class"
+    ]
   },
   "Create ViewSet": {
     "prefix": "|viewset",
@@ -280,8 +275,7 @@
       "",
       "    def perform_create(self, serializer):",
       "        serializer.save(user_id=self.request.user)"
-    ],
-    "description": "Create ViewSet"
+    ]
   },
   "Create Base ViewSet": {
     "prefix": "|base_viewset",
@@ -334,8 +328,7 @@
       "",
       "    def perform_create(self, serializer):",
       "        serializer.save(user_id=self.request.user)"
-    ],
-    "description": "Create Base ViewSet"
+    ]
   },
   "Create Schema": {
     "prefix": "|schemas",
@@ -479,8 +472,7 @@
       "    ),",
       "    # ! TODO: Add extra action fields here",
       "}"
-    ],
-    "description": "Create DRF Spectacular Schema"
+    ]
   },
   "Create Filters": {
     "prefix": "|filter",
@@ -620,8 +612,7 @@
       "",
       "    class Meta:",
       "        abstract = True"
-    ],
-    "description": "Mixin providing slug functionality for models."
+    ]
   },
   "Utils: ListCacheMixin": {
     "prefix": "|u_list_cache_mixin",
@@ -651,8 +642,7 @@
       "",
       "        serializer = self.get_serializer(queryset, many=True)",
       "        return Response(serializer.data)"
-    ],
-    "description": "Mixin provides caching for the list methods of viewsets."
+    ]
   },
   "Utils: LogicalDeleteMixin": {
     "prefix": "|u_logical_delete_mixin",
@@ -680,8 +670,7 @@
       "            return Response(",
       "                {'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR",
       "            )"
-    ],
-    "description": "Mixin for logical deletion of instances."
+    ]
   },
   "Utils: ReadOnlyFieldsMixin": {
     "prefix": "|u_readonly_fields_mixin",
@@ -693,8 +682,7 @@
       "        super().__init__(*args, **kwargs)",
       "        for field in self.fields:",
       "            self.fields[field].read_only = True"
-    ],
-    "description": "Mixin to make all serializer fields read-only."
+    ]
   },
   "Create Char field (Model)": {
     "prefix": "|m_char",
